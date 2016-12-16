@@ -59,7 +59,7 @@
 			  <!-- Noura's work -->			  
 			  <section>
 			    <section> Noura's work </section>
-			    <section> We use the Arabic Opinion Target dataset developed by our very own Noura
+			    <section> We use the Arabic Opinion Target dataset developed by Noura
 			    </section>
 			    <section>
 			      <p>1200 online comments posted to Aljazeera newspaper articles</p>
@@ -69,7 +69,11 @@
 			    <section data-background-color="white">
 			      <div  style="height: 600px; width: 1000px;" id="5d8bdbc3-7a74-45fc-a61a-83408ac56397"  class="plotly-graph-div"></div>
 			    </section>
-			    <section> CRF Model
+			    <section data-background-color="white">
+			      Sequence Labeling task
+			      <img src="figure2.png"  >
+			    </section>
+			    <section> 
 			      <p>Pipelined two CRF models </p>
 			      <p>Tested with different morphological schemes using MADAMIRA </p>
 			      <p>Introduced rich linguistic features<p>
@@ -83,12 +87,16 @@
 			      <p>Can we greatly reduce the feature engineering step?
 			      </p>
 			    </section>
-			    <section  data-markdown data-background-color="white"
+			    <section  data-background-color="white"
 				      data-background-size="800px"
 				      data-background-position="50% 50%"
 				      data-background-image="http://i.stack.imgur.com/kwhAP.jpg">
-			      <script type="text/template">
-			      </script>
+			    </section>
+			    <section>
+			      <p>Word Vectors</p>
+			      <p>Used Arabic Wikidump to pretrain word vectors</p>
+			      <p>Used fasttext library to train skipgram with negative sampling with dimension 50</p>
+			      <p>Trained word vectors on a variety of morphological schemes<p>
 			    </section>
 				
 			  </section>
