@@ -139,10 +139,6 @@ lexical_model.add(Embedding(
 <mark>    weights=embedding_weights,</mark>
     trainable=args.fine_tune))
 
-lexical_model.add(
-    LSTM(RNN_SIZE,
-         return_sequences=True,
-         dropout_W=args.dropout_word))
 			      </code></pre>
 			    </section>
 			    <section>
@@ -156,10 +152,6 @@ pos_model.add(Embedding(
     init="glorot_normal",
     trainable=args.fine_tune))
 
-pos_model.add(
-    LSTM(RNN_SIZE,
-         return_sequences=True,
-         dropout_W=args.dropout_word))
 			      </code></pre>
 			    </section>			    
 
@@ -172,6 +164,10 @@ model_list = <mark >[lexical_model, pos_model]</mark>
 merged =Merge(model_list, mode='concat')
 model = Sequential()
 model.add(<mark>merged</mark>)
+model.add(
+    LSTM(RNN_SIZE,
+         return_sequences=True,
+         dropout_W=.2))
 model.add(Dropout(0.2))
 			      </code></pre>
 			    </section>
@@ -192,15 +188,9 @@ model.compile(loss='categorical_crossentropy',
 			      <p>Computation graph, Automatic Differenation, and Backpropagation all done for you.
 			    </section>
 			    <section>
-			      <h4>Initial Architecture</h4>
+			      <h4>Sample architecture</h4>
 			      <p>TODO put image here</p>
 			    </section>
-			    <section>
-			      <h4>Architecture with POS and Lexical</h4>
-			      <p>TODO put image here</p>
-			    </section>
-			    
-			    
 			  </section>
 			  <section>
 			    <section>
@@ -222,7 +212,7 @@ model.compile(loss='categorical_crossentropy',
 			      <p class="fragment fade-down">Process input in reverse<p>
 			    </section>
 			     <section>
-			      <h4>Dual RNNs with Bidirectionality on POS RNN</h4>
+			      <h4>Final Architecture</h4>
 			      <p>TODO put image here</p>
 			    </section>
 			  </section>
@@ -255,7 +245,33 @@ model.load_weights(args.transfer_model, by_name=True)
 			      <p>Data sparsity issues</p>
 			    </section>
 			  </section>
-
+			  <section>
+			    <section>Results</section>
+			    <section data-markdown>
+			      <script type="text/template">
+| Features         | CRF Precision | CRF Recall | CRF F1 | LSTM Precision | LSTM Recall | LSTM F1 |
+|------------------|---------------|------------|--------|----------------|-------------|---------|
+| Surface + POS    | 41.0          | 60.6       | 48.9   | 43.3           | 64.7        | 54.8    |
+| Lemma + POS      | 48.2          | 60.5       | 53.7   | 54.0           | 72.8        | **62.0**    |
+| + D3             | 59.6          | 55.7       | 57.6   | 43.1           | 89.0        | **58.0**    |
+| + ATB            | 52.4          | 59.5       | 55.7   | 53.0           | 73.9        | **61.7**    |
+| Best Linguistic  | 66.2          | 57.8       | 61.8   |                |             |         |
+			      </script>
+			    </section>
+			    <section>
+			      <img src="figure_1.png"  >
+			    </section>
+			    <section>
+			      Sentiment Classification work is ongoing..
+			    </section>
+			  </section>
+			  <section>
+			    <h4> Key takeaways</h4>
+			    <p>With less data, break the task down</p>
+			    <p>Take full advantage of latent representions with less sparsity </p>
+			    <p>Do error analysis</p>
+			    <p>Use out of the box libraries</p>
+			  </section>
 			</div>
 		</div>
 
