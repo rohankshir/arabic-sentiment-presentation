@@ -24,7 +24,7 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-			  <section>Targeted Sentiment Analysis in Arabic
+			  <section>Open Domain Targeted Sentiment Analysis in Arabic
 			    <p class="fragment fade-up">Using Neural Networks</p>
 			  </section>
 
@@ -32,13 +32,21 @@
 			  <section>
 			    <section>Background</section>
 			    <section>
-			      <p>Targeted sentiment analysis investigates the classification of sentiment polarities towards certain target entity mentions. </p>
+			      <p>Open Domain Targeted SA investigates the classification of sentiment polarities towards certain target entity mentions. </p>
+			      <p>Targets aren't given to you (as opposed to Targeted Sentiment Analysis)</p>			      
 			      <p>Targets are not limited to Named Entities. Can be any Noun Phrase </p>
+			    </section>
+			    <section>
+			      <h3>Examples of targets</h3>
+			      <p>singing in the bath</p>
+			      <p>the best defense against Trump</p>
+			      <p>Windows 7</p>
+			      <p>American imperialism</p>
 			    </section>
 			    <section>
 			      <p>Uses in typical NLP tasks such as Information Extraction, Summarization, Question-Answering</p>
 			      <p>Source help in a crisis</p>
-			      <p>Understand public opinion</p>
+			      <p class="fragment highlight-blue" >Understand public opinion</p>
 			    </section>
 			    <section>
 			      <img  src="http://images.says.com/uploads/story_source/source_image/361632/9c5c.jpg">
@@ -57,7 +65,7 @@
 			    </section>
 			    <section>
 			      Translation provided by Google
-			      <p>This is one of the achievements of the <b class="fragment highlight-red">revolution</b> and more to come, Congratulations to you and your revolution, after <b class="fragment highlight-red">Libyan experiences and Iraqi and Egyptian</b> and what we saw destruction and killing and colonization, We in Syria do not want the American creative Alfodh revolution. We want <b class="fragment highlight-green"> Syria's security and safety of Arabism and sincere </b>
+			      <p>This is one of the achievements of the <b class="fragment highlight-red">revolution</b> and more to come, Congratulations to you and your revolution, after <b class="fragment highlight-red">Libyan experiences and Iraqi and Egyptian</b> and what we saw destruction and killing and colonization, We in Syria do not want the American creative chaotic revolution. We want <b class="fragment highlight-green"> Syria's security and safety of Arabism and sincere </b>
 			      </p>
 			    </section>
 			  </section>
@@ -83,17 +91,29 @@
 			    </section>
 			    <section>
 			      <h4>Morphology</h4>
-			      <p><b>D3</b> splitting off all the clitics, particles, and prepositions (Al+)  </p>
 			      <p><b>ATB</b> splitting off all the clitics and particles, but keeps the definite article Al+ attached  </p>
-			      <p>Original: AlmtHdh (romanized surface word)</p>
-			      <p class="fragment">D3 Tokenized:[(Al+ DET) (mut~aHid_1 adj) (w+ conj T)</p>
-			      <p class="fragment">ATB Tokenized:[(mut~aHid_1 adj) (w+ conj)]</p>
+			      <p><b>D3</b> splitting off all the clitics, particles, and prepositions (Al+)  </p>
+			      <p>Original:"bEwn AlHkwmh" </p><p> Translation(lemma): with(help)from the(Government)</p>
+			      <p class="fragment">ATB Tokenized: b+, Eawon_1, Hukuwmap_1</p>
+			      <p class="fragment">D3 Tokenized:b+, Eawon_1, Al+, Hukuwmap_1</p>
 			    </section>
 			    <section> 
 			      <p>Pipelined two CRF models </p>
 			      <p>Tested with different morphological schemes using MADAMIRA </p>
 			      <p>Introduced rich linguistic features<p>
 			      <p>TODO cite</p>
+			    </section>
+			    <section>
+			      <p>We continued this approach of breaking the task down into two components</p>
+			      <p>Allows for modularity</p>
+			      <p>Can better address sparsity issues on a small dataset</p>
+			      <p>Easier to "debug"</p>
+			    </section>
+			    <section>
+			      <h4> Two tasks</h4>
+			      <p>Target Extraction (as a sequence labeling task)</p>
+			      <img border="0" src="arrow.png">
+			      <p>Target Dependent Sentiment Classification (as a binary classification task)</p>
 			    </section>
 			  </section>
 
@@ -108,7 +128,7 @@
 				      data-background-size="800px"
 				      data-background-position="50% 50%"
 				      data-background-image="http://i.stack.imgur.com/kwhAP.jpg">
-			      <p>TODO cite</p>
+			      <h4 style="position:fixed; top:200px;left:400px;">TODO cite</h4>
 			    </section>
 			    <section  data-background-color="white"
 				      data-background-size="120px"
@@ -258,7 +278,7 @@ model.load_weights(args.transfer_model, by_name=True)
 			      <script type="text/template">
 | Features         | CRF Precision | CRF Recall | CRF F1 | LSTM Precision | LSTM Recall | LSTM F1 |
 |------------------|---------------|------------|--------|----------------|-------------|---------|
-| Surface + POS    | 41.0          | 60.6       | 48.9   | 43.3           | 64.7        | 54.8    |
+| Surface + POS    | 41.0          | 60.6       | 48.9   | 43.3           | 64.7        | **54.8**    |
 | Lemma + POS      | 48.2          | 60.5       | 53.7   | 54.0           | 72.8        | **62.0**    |
 | + D3             | 59.6          | 55.7       | 57.6   | 43.1           | 89.0        | **58.0**    |
 | + ATB            | 52.4          | 59.5       | 55.7   | 53.0           | 73.9        | **61.7**    |
@@ -277,7 +297,7 @@ model.load_weights(args.transfer_model, by_name=True)
 			    <p>With less data, break the task down</p>
 			    <p>Take full advantage of latent representions with less sparsity </p>
 			    <p>Do error analysis</p>
-			    <p>Use out of the box libraries</p>
+			    <p>Word vectors + RNNs = Powerful building blocks to play around with in *any* language </p>
 			  </section>
 			</div>
 		</div>
