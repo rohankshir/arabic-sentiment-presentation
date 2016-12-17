@@ -148,10 +148,14 @@
 			      <p>Used fasttext library to train skipgram with negative sampling with dimension 50</p>
 			      <p>Trained word vectors on a variety of morphological schemes (lemma, ATB, D3)<p>
 			    </section>
+			    <section data-background-color="white">
+			      <p>Initial architecture we want to build</p>
+			      <img src="single_rnn.png">
+			    </section>
 			    <section>
 			      <h3>Keras</h3>
 			      <p>Python Deep Learning library
-			      <p>Makes it pretty easy to experiment with different architectures</p>
+			      <p>Easy to experiment with different architectures</p>
 			      <p>Tensorflow or Theano Backend <p>
 			    </section>
 			    <section>
@@ -210,14 +214,6 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy'])
 			      </code></pre>
 			    </section>
-			    <section>
-			      <p>Can experiment with many architectures quickly</p>
-			      <p>Computation graph, Automatic Differenation, and Backpropagation all done for you.
-			    </section>
-			    <section>
-			      <h4>Sample architecture</h4>
-			      <p>TODO put image here</p>
-			    </section>
 			  </section>
 			  <section>
 			    <section>
@@ -230,17 +226,17 @@ model.compile(loss='categorical_crossentropy',
 			    </section>
 			    <section>
 			      <p>Figure out simple way to understand errors on validation data</p>
-			      <img src="error_analysis_lex.png"  >
+			      <img src="error_analysis_lex.png">
 
 			    </section>
 			    <section>
 			      <p>Key insight</p>
-			      <img src="error_analysis.png"  >
+			      <img src="error_analysis.png">
 			      <p class="fragment fade-down">Process input in reverse<p>
 			    </section>
-			     <section>
+			     <section data-background-color="white">
 			      <h4>Final Architecture</h4>
-			      <p>TODO put image here</p>
+			      <img src="multi_rnn.png">
 			    </section>
 			  </section>
 			  <section>
@@ -297,7 +293,7 @@ model.load_weights(args.transfer_model, by_name=True)
 			    <p>With less data, break the task down</p>
 			    <p>Take full advantage of latent representions with less sparsity </p>
 			    <p>Do error analysis</p>
-			    <p>Word vectors + RNNs = Powerful building blocks to play around with in *any* language </p>
+			    <p>Word vectors + RNNs = Powerful building blocks to play around with in <i>any</i> language </p>
 			  </section>
 			</div>
 		</div>
