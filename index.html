@@ -75,15 +75,12 @@
 			  <section>
 			    <section> Noura's work </section>
 			    <section> We use the Arabic Opinion Target dataset developed by Noura
-			      <p>TODO cite</p>
+			      <p>Farrah 2015</p>
 			    </section>
 			    <section>
 			      <p>1200 online comments posted to Aljazeera newspaper articles</p>
 			      <p> 4886 targets: 38.2% positive, 50.5% negative, and 11.3% ambiguous</p>
 			      <p> ~ 100,000 words and a vocabulary ~ 10,000</p>
-			    </section>
-			    <section data-background-color="white">
-			      <div  style="height: 600px; width: 1000px;" id="5d8bdbc3-7a74-45fc-a61a-83408ac56397"  class="plotly-graph-div"></div>
 			    </section>
 			    <section data-background-color="white">
 			      Sequence Labeling task
@@ -101,7 +98,8 @@
 			      <p>Pipelined two CRF models </p>
 			      <p>Tested with different morphological schemes using MADAMIRA </p>
 			      <p>Introduced rich linguistic features<p>
-			      <p>TODO cite</p>
+			      <p>Added word2vec cluster IDs for distributed representation</p>
+			      <p>Farrah 2016</p>
 			    </section>
 			    <section>
 			      <p>We continued this approach of breaking the task down into two components</p>
@@ -128,7 +126,7 @@
 				      data-background-size="800px"
 				      data-background-position="50% 50%"
 				      data-background-image="http://i.stack.imgur.com/kwhAP.jpg">
-			      <h4 style="position:fixed; top:200px;left:400px;">TODO cite</h4>
+			      <p style="position:fixed; top:200px;left:400px;">Karpathy 2015</p>
 			    </section>
 			    <section  data-background-color="white"
 				      data-background-size="120px"
@@ -138,7 +136,7 @@
 			    </section>
 			    <section>
 			      RNN/LSTMs are a helpful abstraction to represent sequences in Neural Networks
-			      <p>TODO cite</p>
+			      <p>Kiperwasser 2016, Goldberg 2015, Cho 2015</p>
 			    </section>
 
 			    
@@ -255,38 +253,107 @@ model.compile(loss='categorical_crossentropy',
 			      <div  style="height: 600px; width: 1000px;" id="4d91f07d-b69b-4b8b-a8e6-29d28f71b492"  class="plotly-graph-div"></div>
 			    </section>
 			    <section> More experiments </section>
-			    <section> <h4>Retrofitting</h4>
-			      <p>Dataset was too small for any real benefit</p>
+			    <section> <h4>Retrofitting to Sentiment Lexicons</h4>
+			      <p>Inspired by Retrofitting Word Vectors to Semantic Lexicons by Faruqui et al
+			      <p>Set of modified word vectors was too small for any real benefit. Almost no overlap with the validation set.</p>
+			      <p>
+			    </section>
+			    <section>
+			      <p>Tried collapsed model, training the LSTM end to end</p>
+			      <p>Positive(T), Negative(T), Neutral(O)</p>
+			      <p>Sentiment Accuracy was ~65 %.</p>
+			      <p>Data sparsity issues</p>
 			    </section>
 			    <section> Transfer Learning
 			      <pre><code data-trim data-noescape>
-model.load_weights(args.transfer_model, by_name=True)
+				  model.load_weights(args.transfer_model, by_name=True)
 			      </code></pre>
+			      <p>Ended up predicting neutral most of the time</p>
+			    </section>
+			    
+			  </section>
+			  <section>
+			    <section>
+			      Sentiment Classification
+			    </section>
+
+			    <section>
+			      <p>Simplified the problem</p>			      
+			      <p>Given the target, predictive positive or negative</p>
+			      <p>Use local context as feature input</p>
+			      <p>No longer a sequence labeling task, just a binary classification task.</p>
+			      <p>A comment with 3 predicted targets would create three examples.</p>
 			    </section>
 			    <section>
-			      <p>Collapsed Model</p>
-			      <p>Data sparsity issues</p>
+			      <p>"Increased" training data</p>
+			      <p>Sparsified feature space</p>
+			    </section>
+			    <section>
+			      <p>Vowpal Wabbit</p>
+			      <p>LSTM (many to one)</p>
+			      <p>CNN</p>
+			    </section>
+			    <section>
+			      <h3>Hyperparameter tuning</h3>
+			      <p>context window of 6 was optimal on validation set</p>
 			    </section>
 			  </section>
 			  <section>
 			    <section>Results</section>
+			    <section>Target Extraction Results</section>
 			    <section data-markdown>
 			      <script type="text/template">
 | Features         | CRF Precision | CRF Recall | CRF F1 | LSTM Precision | LSTM Recall | LSTM F1 |
 |------------------|---------------|------------|--------|----------------|-------------|---------|
-| Surface + POS    | 41.0          | 60.6       | 48.9   | 43.3           | 64.7        | **54.8**    |
-| Lemma + POS      | 48.2          | 60.5       | 53.7   | 54.0           | 72.8        | **62.0**    |
-| + D3             | 59.6          | 55.7       | 57.6   | 43.1           | 89.0        | **58.0**    |
-| + ATB            | 52.4          | 59.5       | 55.7   | 53.0           | 73.9        | **61.7**    |
-| Best Linguistic  | 66.2          | 57.8       | 61.8   |                |             |         |
+| Surface + POS    | 41.0          | 60.6       | 48.9   | 43.3           | 64.7        | **54.8** <!-- .element: class="fragment highlight-blue" -->   |
+| Lemma + POS      | 48.2          | 60.5       | 53.7   | 54.0           | 72.8        | **62.0** <!-- .element: class="fragment highlight-blue" -->   |
+| + D3             | 59.6          | 55.7       | 57.6   | 43.1           | 89.0        | **58.0**  <!-- .element: class="fragment highlight-blue" -->  |
+| + ATB            | 52.4          | 59.5       | 55.7   | 53.0           | 73.9        | **61.7** <!-- .element: class="fragment highlight-blue" -->   |
+| Best Linguistic  | 66.2          | 57.8       | 61.8 <!-- .element: class="fragment highlight-blue" -->   |  |                |             |         |
 			      </script>
 			    </section>
 			    <section>
-			      <img src="figure_1.png"  >
+			      <p>Neural models tend to favor recall over precision</p>
+			      <p>Lemmas capture majority of the information</p>
+			      <p>ATB and D3 increase recall further at the cost of precision</p>
+			      <p>Adding dropout (.2) to the lexical input with no dropout for the POS input worked best</p>
 			    </section>
 			    <section>
-			      Sentiment Classification work is ongoing..
+			      <img src="figure_1.png">
 			    </section>
+			    <section>
+			      Sentiment Classification Results 
+			    </section>
+			    <section>
+			      Noura's pipelined results
+			    </section>
+			    <section data-markdown>
+			      <script type="text/template">
+| Features        | F-pos | F-neg | Acc-sent | F-all |
+|-----------------|-------|-------|----------|-------|
+| Surface + POS   |  62.2 |  73.6 |     68.9 |  32.6 |
+| Lemma + POS     |  65.4 |  77.6 |     72.8 |  38.1 |
+| + ATB           |  61.3 |  75.7 |     70.1 |  38.2 |
+| + D3            |  64.1 |    73 |     69.2 |  36.1 |
+| Best linguistic |    70 |    80 |       76 |  **44.2** <!-- .element: class="fragment highlight-blue" -->|				 
+			       </script>
+			    </section>
+			    <section>
+			      Neural Target Prediction + Vowpal Wabbit Linear Classifier
+			    </section>
+			    <section data-markdown>
+			      <script type="text/template">
+| Features      | F-pos | F-neg | Acc-sent | F-all |
+|---------------|-------|-------|----------|-------|
+| Surface + POS |  58.4 |  67.5 |     63.5 |  28.8 |
+| Lemma + POS   |  66.0 |  78.3 |     73.6 |  **38.3**<!-- .element: class="fragment highlight-blue" --> | 
+| + ATB         |  67.8 |  78.9 |     74.5 |  38.1 |
+| + D3          |  59.4 |  79.9 |     71.1 | 28.3  |				
+			      </script>
+			    </section>
+			    <section>
+			      <p>Models with high recall got penalized in final F score due to lower precision</p>
+			      <p>Simple linear model with bag of ngram features maintained good accuracy (Over 70%)</p>
 			  </section>
 			  <section>
 			    <h4> Key takeaways</h4>
@@ -294,6 +361,12 @@ model.load_weights(args.transfer_model, by_name=True)
 			    <p>Take full advantage of latent representions with less sparsity </p>
 			    <p>Do error analysis</p>
 			    <p>Word vectors + RNNs = Powerful building blocks to play around with in <i>any</i> language </p>
+			  </section>
+			  <section>
+			    <h4>Future work</h4>
+			    <p>Try to increase dataset by an order of magnitude (distantly supervised)</p>
+			    <p>Improve error analysis tools</p>
+			    <p>Introduce attention model </p>
 			  </section>
 			</div>
 		</div>
